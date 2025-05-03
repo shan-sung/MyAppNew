@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MyApp</string>
+
+    <!-- 你其他的 trip_title 字串也應該放在這裡 -->
+    <string name="trip_title1">沙灘夕陽</string>
+    <string name="trip_title2">山林步道</string>
+    <string name="trip_title3">古蹟探索</string>
+    <string name="trip_title4">城市夜景</string>
+    <string name="trip_title5">湖畔野餐</string>
+    <string name="trip_title6">歷史街區</string>
+
+    <string name="trip_name_1">陽明山秘境之旅</string>
+    <string name="trip_name_2">東海岸三日行</string>
+
+    <string name="city_name_1">台北市探索</string>
+    <string name="city_name_2">台南老街巡禮</string>
+</resources>
