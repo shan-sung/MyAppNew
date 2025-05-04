@@ -2,12 +2,20 @@
     <string name="app_name">MyApp</string>
 
     <!-- 你其他的 trip_title 字串也應該放在這裡 -->
-    <string name="trip_title1">沙灘夕陽</string>
-    <string name="trip_title2">山林步道</string>
-    <string name="trip_title3">古蹟探索</string>
-    <string name="trip_title4">城市夜景</string>
-    <string name="trip_title5">湖畔野餐</string>
-    <string name="trip_title6">歷史街區</string>
+    <string name="taipei">台北</string>
+    <string name="new_taipei">新北</string>
+    <string name="keelung">基隆</string>
+    <string name="taoyuan">桃園</string>
+    <string name="taichung">台中</string>
+    <string name="tainan">台南</string>
+    <string name="kaohsiung">高雄</string>
+    <string name="pingtung">屏東</string>
+    <string name="hsinchu">新竹</string>
+    <string name="yilan">宜蘭</string>
+    <string name="hualien">花蓮</string>
+    <string name="chiayi">嘉義</string>
+    <string name="taitung">台東</string>
+
 
     <string name="trip_name_1">陽明山秘境之旅</string>
     <string name="trip_name_2">東海岸三日行</string>

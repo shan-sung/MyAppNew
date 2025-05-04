@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.myapp.data.model.City
 import com.example.myapp.data.model.Trip
 import com.example.myapp.viewmodel.ExploreViewModel
 
@@ -37,57 +38,47 @@ import com.example.myapp.viewmodel.ExploreViewModel
 fun ExploreScreen(navController: NavController) {
     val viewModel: ExploreViewModel = viewModel()
 
-    val hotTrips by viewModel.tmpTrips.collectAsState()
-    val cities by viewModel.cities.collectAsState()
-
     Scaffold { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            ExploreType(
-                title = "參考行程",
-                trips = hotTrips,
-                onMoreClick = { navController.navigate("tmp_trips") }
-            )
-
+            HotTripsSection(viewModel, onMoreClick = { navController.navigate("tmp_trips") })
             Spacer(modifier = Modifier.height(24.dp))
-
-            ExploreType(
-                title = "城市探索",
-                trips = cities,
-                onMoreClick = { navController.navigate("cities") }
-            )
+            CityExploreSection(viewModel, onMoreClick = { navController.navigate("cities") })
         }
     }
 }
 
 @Composable
-private fun ExploreType(
-    title: String,
-    trips: List<Trip>,
-    modifier: Modifier = Modifier,
-    onMoreClick: () -> Unit
-) {
-    TripsList(
-        title = title,
-        tripsList = trips,
-        modifier = modifier,
+fun HotTripsSection(viewModel: ExploreViewModel, onMoreClick: () -> Unit) {
+    val hotTrips by viewModel.tmpTrips.collectAsState()
+    ExploreTripsType(
+        title = "參考行程",
+        trips = hotTrips,
         onMoreClick = onMoreClick
     )
 }
 
 @Composable
-fun TripsList(
+fun CityExploreSection(viewModel: ExploreViewModel, onMoreClick: () -> Unit) {
+    val cities by viewModel.cities.collectAsState()
+    ExploreCityType(
+        title = "城市探索",
+        cities = cities,
+        onMoreClick = onMoreClick
+    )
+}
+
+
+@Composable
+fun ExploreTripsType(
     title: String,
-    tripsList: List<Trip>,
+    trips: List<Trip>,
     modifier: Modifier = Modifier,
     onMoreClick: () -> Unit
 ) {
     Column(modifier = modifier.padding(16.dp)) {
         Text(
             text = title,
-            style = TextStyle(
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold
-            ),
+            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(bottom = 8.dp),
             color = Color.Black
         )
@@ -95,14 +86,8 @@ fun TripsList(
         val listState = rememberLazyListState()
 
         LazyRow(state = listState) {
-            items(tripsList) { trip ->
-                TripsCard(
-                    trip = trip,
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .width(160.dp)
-                        .height(180.dp)
-                )
+            items(trips) { trip ->
+                TripCard(trip = trip)
             }
         }
 
@@ -110,9 +95,7 @@ fun TripsList(
 
         Button(
             onClick = onMoreClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
         ) {
             Text("more")
         }
@@ -120,21 +103,63 @@ fun TripsList(
 }
 
 @Composable
-fun TripsCard(trip: Trip, modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
+fun ExploreCityType(
+    title: String,
+    cities: List<City>,
+    modifier: Modifier = Modifier,
+    onMoreClick: () -> Unit
+) {
+    Column(modifier = modifier.padding(16.dp)) {
+        Text(
+            text = title,
+            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold),
+            modifier = Modifier.padding(bottom = 8.dp),
+            color = Color.Black
+        )
+
+        val listState = rememberLazyListState()
+
+        LazyRow(state = listState) {
+            items(cities) { city ->
+                CityCard(city = city)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = onMoreClick,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+        ) {
+            Text("more")
+        }
+    }
+}
+
+@Composable
+fun TripCard(trip: Trip, modifier: Modifier = Modifier) {
+    Card(modifier = modifier.width(160.dp).height(180.dp).padding(end = 8.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
+            Text(text = "${trip.startDate} ~ ${trip.endDate}", style = MaterialTheme.typography.bodySmall)
+        }
+    }
+}
+
+@Composable
+fun CityCard(city: City, modifier: Modifier = Modifier) {
+    Card(modifier = modifier.width(160.dp).height(180.dp).padding(end = 8.dp)) {
         Column {
             Image(
-                painter = painterResource(trip.imageResourceId),
-                contentDescription = stringResource(trip.stringResourceId),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(194.dp),
+                painter = painterResource(city.imageResourceId),
+                contentDescription = stringResource(city.stringResourceId),
+                modifier = Modifier.fillMaxWidth().height(100.dp),
                 contentScale = ContentScale.Crop
             )
             Text(
-                text = LocalContext.current.getString(trip.stringResourceId),
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineSmall
+                text = LocalContext.current.getString(city.stringResourceId),
+                modifier = Modifier.padding(8.dp),
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
