@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -25,19 +24,10 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun MyTripsScreen(navController: NavController, viewModel: MyTripsViewModel = viewModel()) {
-    Scaffold { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            MyTripsList(viewModel = viewModel, navController = navController)
-        }
-    }
-}
-
-@Composable
-fun MyTripsList(viewModel: MyTripsViewModel, navController: NavController) {
-    val trips by viewModel.myTrips.collectAsState()
+    val myTrips by viewModel.myTrips.collectAsState()
 
     LazyColumn {
-        items(trips) { trip ->
+        items(myTrips) { trip ->
             MyTripCard(trip = trip, navController = navController)
         }
     }
@@ -45,6 +35,8 @@ fun MyTripsList(viewModel: MyTripsViewModel, navController: NavController) {
 
 @Composable
 fun MyTripCard(trip: Trip, navController: NavController) {
+    val dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,10 +48,14 @@ fun MyTripCard(trip: Trip, navController: NavController) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
-            val dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
-            Text(text = "${trip.startDate.format(dateFormatter)} - ${trip.endDate.format(dateFormatter)}（共 ${trip.days} 天）")
+            Text(
+                text = "${trip.startDate.format(dateFormatter)} - ${trip.endDate.format(dateFormatter)}（共 ${trip.days} 天）"
+            )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "旅伴：${trip.members.joinToString("、")}", style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = "旅伴：${trip.members.joinToString("、")}",
+                style = MaterialTheme.typography.bodySmall
+            )
         }
     }
 }

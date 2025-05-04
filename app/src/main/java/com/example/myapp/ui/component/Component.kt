@@ -54,7 +54,7 @@ fun TripCard(trip: Trip, navController: NavController, modifier: Modifier = Modi
             .height(180.dp)
             .padding(end = 8.dp)
             .clickable {
-                navController.navigate("trip_details/${trip.id}")
+                navController.navigate("tmp_trip_details/${trip.id}")
             }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {

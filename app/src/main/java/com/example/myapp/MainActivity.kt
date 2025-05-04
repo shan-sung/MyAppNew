@@ -24,6 +24,7 @@ import com.example.myapp.ui.explore.TmpTripDetailsScreen
 import com.example.myapp.ui.explore.TmpTripsScreen
 import com.example.myapp.ui.myTrips.ChatScreen
 import com.example.myapp.ui.myTrips.MyTripsScreen
+import com.example.myapp.ui.myTrips.TripDetailsScreen
 import com.example.myapp.ui.profile.ProfileScreen
 import com.example.myapp.ui.theme.MyAppTheme
 import kotlinx.coroutines.launch
@@ -74,9 +75,14 @@ fun MainScreen() {
             composable(Screen.Profile.route) { ProfileScreen() }
             composable("tmp_trips") { TmpTripsScreen(navController) }
             composable("cities") { CityScreen(navController) }
-            composable("trip_details/{tripId}") { backStackEntry ->
+            composable("tmp_trip_details/{tripId}") { backStackEntry ->
                 val tripId = backStackEntry.arguments?.getString("tripId") ?: ""
                 TmpTripDetailsScreen(tripId = tripId, navController = navController)
+            }
+
+            composable("trip_details/{tripId}") { backStackEntry ->
+                val tripId = backStackEntry.arguments?.getString("tripId") ?: ""
+                TripDetailsScreen(tripId = tripId, navController = navController)
             }
 
             composable("chatroom/{tripId}") { backStackEntry ->
