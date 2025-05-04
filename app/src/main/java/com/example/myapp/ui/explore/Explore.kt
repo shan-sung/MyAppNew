@@ -1,19 +1,14 @@
 package com.example.myapp.ui.explore
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,19 +16,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapp.data.model.City
 import com.example.myapp.data.model.Trip
+import com.example.myapp.ui.component.CityCard
+import com.example.myapp.ui.component.TripCard
 import com.example.myapp.viewmodel.ExploreViewModel
+
 
 @Composable
 fun ExploreScreen(navController: NavController) {
@@ -43,7 +37,7 @@ fun ExploreScreen(navController: NavController) {
         Column(modifier = Modifier.padding(innerPadding)) {
             HotTripsSection(viewModel, navController, onMoreClick = { navController.navigate("tmp_trips") })
             Spacer(modifier = Modifier.height(24.dp))
-            CityExploreSection(viewModel, onMoreClick = { navController.navigate("cities") })
+            CityExploreSection(viewModel, navController, onMoreClick = { navController.navigate("cities") })
         }
     }
 }
@@ -60,11 +54,12 @@ fun HotTripsSection(viewModel: ExploreViewModel, navController: NavController, o
 }
 
 @Composable
-fun CityExploreSection(viewModel: ExploreViewModel, onMoreClick: () -> Unit) {
+fun CityExploreSection(viewModel: ExploreViewModel, navController: NavController, onMoreClick: () -> Unit) {
     val cities by viewModel.cities.collectAsState()
     ExploreCityType(
         title = "城市探索",
         cities = cities,
+        navController = navController,
         onMoreClick = onMoreClick
     )
 }
@@ -108,6 +103,7 @@ fun ExploreTripsType(
 fun ExploreCityType(
     title: String,
     cities: List<City>,
+    navController: NavController,
     modifier: Modifier = Modifier,
     onMoreClick: () -> Unit
 ) {
@@ -123,7 +119,7 @@ fun ExploreCityType(
 
         LazyRow(state = listState) {
             items(cities) { city ->
-                CityCard(city = city)
+                CityCard(city = city, navController = navController)
             }
         }
 
@@ -134,42 +130,6 @@ fun ExploreCityType(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
         ) {
             Text("more")
-        }
-    }
-}
-
-@Composable
-fun TripCard(trip: Trip, navController: NavController, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier
-            .width(160.dp)
-            .height(180.dp)
-            .padding(end = 8.dp)
-            .clickable {
-                navController.navigate("trip_details/${trip.id}")
-            }
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
-            Text(text = "${trip.startDate} ~ ${trip.endDate}", style = MaterialTheme.typography.bodySmall)
-        }
-    }
-}
-@Composable
-fun CityCard(city: City, modifier: Modifier = Modifier) {
-    Card(modifier = modifier.width(160.dp).height(180.dp).padding(end = 8.dp)) {
-        Column {
-            Image(
-                painter = painterResource(city.imageResourceId),
-                contentDescription = stringResource(city.stringResourceId),
-                modifier = Modifier.fillMaxWidth().height(100.dp),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = LocalContext.current.getString(city.stringResourceId),
-                modifier = Modifier.padding(8.dp),
-                style = MaterialTheme.typography.bodyMedium
-            )
         }
     }
 }

@@ -17,10 +17,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.myapp.viewmodel.MyTripsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapp.data.model.Trip
+import com.example.myapp.viewmodel.MyTripsViewModel
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -48,7 +48,7 @@ fun MyTripCard(trip: Trip, navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable {
                 navController.navigate("trip_details/${trip.id}")
             }

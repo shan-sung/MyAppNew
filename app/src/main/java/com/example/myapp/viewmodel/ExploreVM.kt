@@ -1,9 +1,9 @@
 package com.example.myapp.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.myapp.data.model.Trip
 import com.example.myapp.data.Datasource
 import com.example.myapp.data.model.City
+import com.example.myapp.data.model.Trip
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

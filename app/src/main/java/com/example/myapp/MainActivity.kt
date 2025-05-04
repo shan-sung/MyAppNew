@@ -5,27 +5,28 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.compose.rememberNavController
-import com.example.myapp.ui.explore.ExploreScreen
-import com.example.myapp.ui.myTrips.MyTripsScreen
-import com.example.myapp.ui.profile.ProfileScreen
-import com.example.myapp.ui.theme.MyAppTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import kotlinx.coroutines.launch
+import androidx.navigation.compose.rememberNavController
 import com.example.myapp.data.network.RetrofitClient
 import com.example.myapp.navigation.BottomBar
 import com.example.myapp.navigation.Screen
 import com.example.myapp.ui.TopBar
 import com.example.myapp.ui.explore.CityScreen
+import com.example.myapp.ui.explore.ExploreScreen
 import com.example.myapp.ui.explore.TmpTripDetailsScreen
 import com.example.myapp.ui.explore.TmpTripsScreen
 import com.example.myapp.ui.myTrips.ChatScreen
+import com.example.myapp.ui.myTrips.MyTripsScreen
+import com.example.myapp.ui.profile.ProfileScreen
+import com.example.myapp.ui.theme.MyAppTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +72,8 @@ fun MainScreen() {
             composable(Screen.Explore.route) { ExploreScreen(navController) }
             composable(Screen.MyTrips.route) { MyTripsScreen(navController) }
             composable(Screen.Profile.route) { ProfileScreen() }
-            composable("tmp_trips") { TmpTripsScreen() }
-            composable("cities") { CityScreen() }
+            composable("tmp_trips") { TmpTripsScreen(navController) }
+            composable("cities") { CityScreen(navController) }
             composable("trip_details/{tripId}") { backStackEntry ->
                 val tripId = backStackEntry.arguments?.getString("tripId") ?: ""
                 TmpTripDetailsScreen(tripId = tripId, navController = navController)
