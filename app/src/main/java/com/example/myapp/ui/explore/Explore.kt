@@ -1,6 +1,7 @@
 package com.example.myapp.ui.explore
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,7 +41,7 @@ fun ExploreScreen(navController: NavController) {
 
     Scaffold { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            HotTripsSection(viewModel, onMoreClick = { navController.navigate("tmp_trips") })
+            HotTripsSection(viewModel, navController, onMoreClick = { navController.navigate("tmp_trips") })
             Spacer(modifier = Modifier.height(24.dp))
             CityExploreSection(viewModel, onMoreClick = { navController.navigate("cities") })
         }
@@ -48,11 +49,12 @@ fun ExploreScreen(navController: NavController) {
 }
 
 @Composable
-fun HotTripsSection(viewModel: ExploreViewModel, onMoreClick: () -> Unit) {
+fun HotTripsSection(viewModel: ExploreViewModel, navController: NavController, onMoreClick: () -> Unit) {
     val hotTrips by viewModel.tmpTrips.collectAsState()
     ExploreTripsType(
         title = "參考行程",
         trips = hotTrips,
+        navController = navController,
         onMoreClick = onMoreClick
     )
 }
@@ -67,11 +69,11 @@ fun CityExploreSection(viewModel: ExploreViewModel, onMoreClick: () -> Unit) {
     )
 }
 
-
 @Composable
 fun ExploreTripsType(
     title: String,
     trips: List<Trip>,
+    navController: NavController,
     modifier: Modifier = Modifier,
     onMoreClick: () -> Unit
 ) {
@@ -87,7 +89,7 @@ fun ExploreTripsType(
 
         LazyRow(state = listState) {
             items(trips) { trip ->
-                TripCard(trip = trip)
+                TripCard(trip = trip, navController = navController)
             }
         }
 
@@ -137,15 +139,22 @@ fun ExploreCityType(
 }
 
 @Composable
-fun TripCard(trip: Trip, modifier: Modifier = Modifier) {
-    Card(modifier = modifier.width(160.dp).height(180.dp).padding(end = 8.dp)) {
+fun TripCard(trip: Trip, navController: NavController, modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier
+            .width(160.dp)
+            .height(180.dp)
+            .padding(end = 8.dp)
+            .clickable {
+                navController.navigate("trip_details/${trip.id}")
+            }
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
             Text(text = "${trip.startDate} ~ ${trip.endDate}", style = MaterialTheme.typography.bodySmall)
         }
     }
 }
-
 @Composable
 fun CityCard(city: City, modifier: Modifier = Modifier) {
     Card(modifier = modifier.width(160.dp).height(180.dp).padding(end = 8.dp)) {

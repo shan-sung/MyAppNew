@@ -23,9 +23,9 @@ import com.example.myapp.navigation.BottomBar
 import com.example.myapp.navigation.Screen
 import com.example.myapp.ui.TopBar
 import com.example.myapp.ui.explore.CityScreen
+import com.example.myapp.ui.explore.TmpTripDetailsScreen
 import com.example.myapp.ui.explore.TmpTripsScreen
 import com.example.myapp.ui.myTrips.ChatScreen
-import com.example.myapp.ui.myTrips.TripDetailsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,15 +73,15 @@ fun MainScreen() {
             composable(Screen.Profile.route) { ProfileScreen() }
             composable("tmp_trips") { TmpTripsScreen() }
             composable("cities") { CityScreen() }
-            composable( "trip_details/{tripId}") { backStackEntry ->
+            composable("trip_details/{tripId}") { backStackEntry ->
                 val tripId = backStackEntry.arguments?.getString("tripId") ?: ""
-                TripDetailsScreen(tripId = tripId, navController = navController)
+                TmpTripDetailsScreen(tripId = tripId, navController = navController)
             }
+
             composable("chatroom/{tripId}") { backStackEntry ->
                 val tripId = backStackEntry.arguments?.getString("tripId") ?: ""
                 ChatScreen(tripId = tripId, navController = navController)
             }
-
         }
     }
 }

@@ -14,3 +14,12 @@ class MyTripsViewModel : ViewModel() {
         _myTrips.value = Datasource.loadTrip()
     }
 }
+
+class TmpTripsViewModel : ViewModel() {
+    private val _tmpTrips = MutableStateFlow<List<Trip>>(emptyList())
+    val tmpTrips: StateFlow<List<Trip>> = _tmpTrips
+
+    init {
+        _tmpTrips.value = Datasource.loadHotTrips()
+    }
+}
