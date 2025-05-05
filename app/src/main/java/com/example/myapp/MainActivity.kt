@@ -18,6 +18,8 @@ import com.example.myapp.data.network.RetrofitClient
 import com.example.myapp.navigation.BottomBar
 import com.example.myapp.navigation.Screen
 import com.example.myapp.ui.TopBar
+import com.example.myapp.ui.attraction.AttractionDetailsScreen
+import com.example.myapp.ui.attraction.AttractionScreen
 import com.example.myapp.ui.explore.CityScreen
 import com.example.myapp.ui.explore.ExploreScreen
 import com.example.myapp.ui.explore.TmpTripDetailsScreen
@@ -88,6 +90,18 @@ fun MainScreen() {
             composable("chatroom/{tripId}") { backStackEntry ->
                 val tripId = backStackEntry.arguments?.getString("tripId") ?: ""
                 ChatScreen(tripId = tripId, navController = navController)
+            }
+            composable("attractions/{cityId}") { backStackEntry ->
+                val cityId = backStackEntry.arguments?.getString("cityId")
+                cityId?.let {
+                    AttractionScreen(navController = navController, cityId = it)
+                }
+            }
+            composable("attraction_details/{attrId}") { backStackEntry ->
+                val cityId = backStackEntry.arguments?.getString("attrId")
+                cityId?.let {
+                    AttractionDetailsScreen(navController = navController, attrId = it)
+                }
             }
         }
     }

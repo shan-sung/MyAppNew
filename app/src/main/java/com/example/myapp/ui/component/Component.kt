@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,42 +27,82 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.myapp.data.model.City
+import com.example.myapp.data.model.Location
 import com.example.myapp.data.model.Trip
 
 @Composable
-fun CityCard(city: City, modifier: Modifier = Modifier, navController: NavController) {
-    Card(modifier = modifier.width(160.dp).height(180.dp).padding(end = 8.dp)) {
-        Column {
-            Image(
-                painter = painterResource(city.imageResourceId),
-                contentDescription = stringResource(city.stringResourceId),
-                modifier = Modifier.fillMaxWidth().height(100.dp),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = LocalContext.current.getString(city.stringResourceId),
-                modifier = Modifier.padding(8.dp),
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-    }
-}
-
-@Composable
-fun TripCard(trip: Trip, navController: NavController, modifier: Modifier = Modifier) {
+fun ClickableCard(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    content: @Composable ColumnScope.() -> Unit
+) {
     Card(
         modifier = modifier
             .width(160.dp)
             .height(180.dp)
             .padding(end = 8.dp)
-            .clickable {
-                navController.navigate("tmp_trip_details/${trip.id}")
-            }
+            .clickable { onClick() }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
-            Text(text = "${trip.startDate} ~ ${trip.endDate}", style = MaterialTheme.typography.bodySmall)
+        Column(modifier = Modifier.padding(8.dp)) {
+            content()
         }
+    }
+}
+
+@Composable
+fun TripCard(trip: Trip, navController: NavController) {
+    ClickableCard(
+        onClick = { navController.navigate("tmp_trip_details/${trip.id}") }
+    ) {
+        Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = "${trip.startDate} ~ ${trip.endDate}",
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+}
+
+@Composable
+fun CityCard(city: City, navController: NavController) {
+    ClickableCard(
+        onClick = { navController.navigate("attractions/${city.id}") }
+    ) {
+        Image(
+            painter = painterResource(city.imageResourceId),
+            contentDescription = stringResource(city.stringResourceId),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            text = LocalContext.current.getString(city.stringResourceId),
+            modifier = Modifier.padding(top = 8.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+@Composable
+fun AttractionCard(attr: Location, navController: NavController) {
+    ClickableCard(
+        onClick = {
+            navController.navigate("attraction_details/${attr.id}")
+        }
+    ) {
+        Image(
+            painter = painterResource(attr.imageResId),
+            contentDescription = attr.title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp),
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            text = attr.title,
+            modifier = Modifier.padding(top = 8.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 

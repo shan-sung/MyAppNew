@@ -3,6 +3,7 @@ package com.example.myapp.data
 import com.example.myapp.R
 import com.example.myapp.data.model.Trip
 import com.example.myapp.data.model.City
+import com.example.myapp.data.model.Location
 
 object Datasource {
 
@@ -29,19 +30,19 @@ object Datasource {
 
     fun loadCities(): List<City> {
         return listOf(
-            City(R.drawable.image1, R.string.taipei),
-            City(R.drawable.image1, R.string.new_taipei),
-            City(R.drawable.image1, R.string.keelung),
-            City(R.drawable.image1, R.string.taoyuan),
-            City(R.drawable.image1, R.string.taichung),
-            City(R.drawable.image1, R.string.tainan),
-            City(R.drawable.image1, R.string.kaohsiung),
-            City(R.drawable.image1, R.string.pingtung),
-            City(R.drawable.image1, R.string.hsinchu),
-            City(R.drawable.image1, R.string.yilan),
-            City(R.drawable.image1, R.string.hualien),
-            City(R.drawable.image1, R.string.chiayi),
-            City(R.drawable.image1, R.string.taitung),
+            City("1", R.drawable.image1, R.string.taipei),
+            City("2", R.drawable.image1, R.string.new_taipei),
+            City("3", R.drawable.image1, R.string.keelung),
+            City("4", R.drawable.image1, R.string.taoyuan),
+            City("5", R.drawable.image1, R.string.taichung),
+            City("6", R.drawable.image1, R.string.tainan),
+            City("7", R.drawable.image1, R.string.kaohsiung),
+            City("8", R.drawable.image1, R.string.pingtung),
+            City("9", R.drawable.image1, R.string.hsinchu),
+            City("10", R.drawable.image1, R.string.yilan),
+            City("11", R.drawable.image1, R.string.hualien),
+            City("12", R.drawable.image1, R.string.chiayi),
+            City("13", R.drawable.image1, R.string.taitung),
         )
     }
 
@@ -62,6 +63,24 @@ object Datasource {
                 endDate = "2025-06-12",
                 days = 3,
                 members = listOf("Charlie", "David")
+            )
+        )
+    }
+    fun loadAttr(): List<Location> {
+        return listOf(
+            Location(
+                id = "1",
+                imageResId = R.drawable.image1,
+                title = "attr1",
+                details = "my warm day, good good, good",
+                cityId = "1"
+            ),
+            Location(
+                id = "2",
+                imageResId = R.drawable.image1,
+                title = "my台中美食行",
+                details = "taichung good, yummy, yummy, yummy",
+                cityId = "5"
             )
         )
     }
