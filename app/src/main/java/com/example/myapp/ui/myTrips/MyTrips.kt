@@ -46,7 +46,7 @@ fun MyTripCard(trip: Trip, navController: NavController) {
             }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
+            Text(text = trip.name, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "${trip.startDate.format(dateFormatter)} - ${trip.endDate.format(dateFormatter)}（共 ${trip.days} 天）"

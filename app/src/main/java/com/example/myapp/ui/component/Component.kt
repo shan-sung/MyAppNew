@@ -54,7 +54,7 @@ fun TripCard(trip: Trip, navController: NavController) {
     ClickableCard(
         onClick = { navController.navigate("tmp_trip_details/${trip.id}") }
     ) {
-        Text(text = trip.title, style = MaterialTheme.typography.titleMedium)
+        Text(text = trip.name, style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = "${trip.startDate} ~ ${trip.endDate}",

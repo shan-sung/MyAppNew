@@ -22,4 +22,7 @@
 
     <string name="city_name_1">台北市探索</string>
     <string name="city_name_2">台南老街巡禮</string>
+
+    <string name="attr_1">一號景點</string>
+    <string name="attr_2">二號景點</string>
 </resources>

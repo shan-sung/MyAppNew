@@ -4,28 +4,84 @@ import com.example.myapp.R
 import com.example.myapp.data.model.Trip
 import com.example.myapp.data.model.City
 import com.example.myapp.data.model.Location
+import com.example.myapp.data.model.DayPlan
+import com.example.myapp.data.model.AttractionPlan
+import com.example.myapp.data.model.User
+import java.time.LocalDate
 
 object Datasource {
 
     fun loadHotTrips(): List<Trip> {
         return listOf(
             Trip(
-                id = "1",
-                title = "高雄探索之旅",
-                startDate = "2025-05-01",
-                endDate = "2025-05-03",
-                days = 3,
-                members = listOf("Gary", "Henry")
+                id = "hotTrip_1",
+                name = "Hot trip 1",
+                members = listOf("Alice", "Bob"),
+                budget = 10000,
+                startDate = LocalDate.parse("2025-05-01"),
+                endDate = LocalDate.parse("2025-05-03"),
+                note = "null",
+                dailyPlans = listOf(
+                    DayPlan(
+                        day = 1,
+                        attractions = listOf(
+                            AttractionPlan(time = "08:00~09:00", name = "Hot 1", type = "eat"),
+                            AttractionPlan(time = "10:00~11:30", name = "Hot 2", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "Hot 3", type = "eat")
+                        )
+                    ),
+                    DayPlan(
+                        day = 2,
+                        attractions = listOf(
+                            AttractionPlan(time = "09:00~11:00", name = "故宮博物院", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "士林夜市", type = "eat"),
+                            AttractionPlan(time = "14:00~16:00", name = "陽明山", type = "walk")
+                        )
+                    ),
+                    DayPlan(
+                        day = 3,
+                        attractions = listOf(
+                            AttractionPlan(time = "10:00~11:00", name = "象山登山步道", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "饒河夜市", type = "eat")
+                        )
+                    )
+                )
             ),
             Trip(
-                id = "2",
-                title = "台南美食行",
-                startDate = "2025-06-10",
-                endDate = "2025-06-14",
-                days = 5,
-                members = listOf("Elle", "Frank")
+                id = "hotTrip_2",
+                name = "Hot trip 2",
+                members = listOf("Charlie", "David", "Bob"),
+                budget = 10000,
+                startDate = LocalDate.parse("2025-05-03"),
+                endDate = LocalDate.parse("2025-05-09"),
+                note = "好期待",
+                dailyPlans = listOf(
+                    DayPlan(
+                        day = 1,
+                        attractions = listOf(
+                            AttractionPlan(time = "08:00~09:00", name = "Hot 1", type = "eat"),
+                            AttractionPlan(time = "10:00~11:30", name = "Hot 2", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "Hot 3", type = "eat")
+                        )
+                    ),
+                    DayPlan(
+                        day = 2,
+                        attractions = listOf(
+                            AttractionPlan(time = "09:00~11:00", name = "故宮博物院", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "士林夜市", type = "eat"),
+                            AttractionPlan(time = "14:00~16:00", name = "陽明山", type = "walk")
+                        )
+                    ),
+                    DayPlan(
+                        day = 3,
+                        attractions = listOf(
+                            AttractionPlan(time = "10:00~11:00", name = "象山登山步道", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "饒河夜市", type = "eat")
+                        )
+                    )
+                )
+            ),
             )
-        )
     }
 
     fun loadCities(): List<City> {
@@ -49,28 +105,48 @@ object Datasource {
     fun loadTrip(): List<Trip> {
         return listOf(
             Trip(
-                id = "3",
-                title = "my台北探索之旅",
-                startDate = "2025-05-01",
-                endDate = "2025-05-03",
-                days = 3,
-                members = listOf("Alice", "Bob")
-            ),
-            Trip(
-                id = "4",
-                title = "my台中美食行",
-                startDate = "2025-06-10",
-                endDate = "2025-06-12",
-                days = 3,
-                members = listOf("Charlie", "David")
+                id = "1",
+                name = "台北探索之旅",
+                members = listOf("Alice", "Bob", "Charlie"),
+                budget = 10000,
+                startDate = LocalDate.parse("2025-05-01"),
+                endDate = LocalDate.parse("2025-05-03"),
+                note = "三天兩夜吃吃喝喝行程",
+                dailyPlans = listOf(
+                    DayPlan(
+                        day = 1,
+                        attractions = listOf(
+                            AttractionPlan(time = "08:00~09:00", name = "永和豆漿", type = "eat"),
+                            AttractionPlan(time = "10:00~11:30", name = "101大樓", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "鼎泰豐", type = "eat")
+                        )
+                    ),
+                    DayPlan(
+                        day = 2,
+                        attractions = listOf(
+                            AttractionPlan(time = "09:00~11:00", name = "故宮博物院", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "士林夜市", type = "eat"),
+                            AttractionPlan(time = "14:00~16:00", name = "陽明山", type = "walk")
+                        )
+                    ),
+                    DayPlan(
+                        day = 3,
+                        attractions = listOf(
+                            AttractionPlan(time = "10:00~11:00", name = "象山登山步道", type = "walk"),
+                            AttractionPlan(time = "12:00~13:00", name = "饒河夜市", type = "eat")
+                        )
+                    )
+                )
             )
         )
     }
+
     fun loadAttr(): List<Location> {
         return listOf(
             Location(
                 id = "1",
                 imageResId = R.drawable.image1,
+                stringResourceId = R.string.attr_1,
                 title = "attr1",
                 details = "my warm day, good good, good",
                 cityId = "1"
@@ -78,9 +154,23 @@ object Datasource {
             Location(
                 id = "2",
                 imageResId = R.drawable.image1,
+                stringResourceId = R.string.attr_2,
                 title = "my台中美食行",
                 details = "taichung good, yummy, yummy, yummy",
                 cityId = "5"
+            )
+        )
+    }
+
+    fun loadUser(): List<User> {
+        return listOf(
+            User(
+                name = "Shan",
+                email = "Shan123@gmail.com",
+                gender = "Female",
+                birthday = LocalDate.parse("2004-02-25"),
+                mbti = "",
+                avatarUrl = ""
             )
         )
     }
